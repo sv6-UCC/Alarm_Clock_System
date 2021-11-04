@@ -2,6 +2,7 @@ import tkinter
 from tkinter import *
 import time
 from tkinter import font
+from winsound import *
 
 
 class Timer:
@@ -34,6 +35,11 @@ class Counter:
 timer = Timer(1)
 counter = Counter(0)
 
+def play():
+    PlaySound('timerSound.wav', SND_FILENAME)
+    time.sleep(1)
+    PlaySound('timerSound.wav', SND_FILENAME)
+
 def convertToSeconds(hour, minute, second):
     shours = int(hour)*3600
     sminutes = int(minute)*60
@@ -65,6 +71,7 @@ def countdown():
         time.sleep(1)
         i += 1
     print("finished")
+    play()
         
        
     
