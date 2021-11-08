@@ -177,10 +177,3 @@ def changeVolume():
             audio.writeframesraw(audioop.mul(frames, p.sampwidth, factor))
 
     new_ringtone(new_track)
-
-
-# Execute Tkinter
-manageSettings()
-edit_time()
-#displayCurrentTimeZone()
-root.mainloop()
