@@ -1,11 +1,20 @@
 import time 
 
-gmt = time.time()
-east = {"gmt1":gmt+3600, "gmt2":gmt+7200, "gmt3":gmt+10800, "gmt4":gmt+14400,"gmt5":gmt+18000, "gmt6":gmt+21600,"gmt7":gmt+25200, "gmt8":gmt+28800,"gmt9":gmt+32400, "gmt10":gmt+36000, "gmt11":gmt+39600, "gmt12":gmt+43200}
-west = {"gmt1":gmt-3600, "gmt2":gmt-7200, "gmt3":gmt-10800, "gmt4":gmt-14400,"gmt5":gmt-18000, "gmt6":gmt-21600,"gmt7":gmt-25200, "gmt8":gmt-28800,"gmt9":gmt-32400, "gmt10":gmt-36000, "gmt11":gmt-39600, "gmt12":gmt-43200}
+PARAM_ERROR = "Unsuitable parameter"
 
-moscow = east["gmt3"]
-dublin = gmt 
-print("Moscow==> ",moscow)
-print("Dublin==> ", dublin)
+gmt = time.strftime('%H:%M:%S %p')
+int(gmt[0:2])+1
+world_times = {"gmt+1":int(gmt[0:2])+1, "gmt+2":int(gmt[0:2])+2, "gmt+3":int(gmt[0:2])+3, "gmt+4":int(gmt[0:2])+4,"gmt+5":int(gmt[0:2])+5, "gmt+6":int(gmt[0:2])+6,
+        "gmt+7":int(gmt[0:2])+7, "gmt+8":int(gmt[0:2])+8,"gmt+9":int(gmt[0:2])+9, "gmt+10":int(gmt[0:2])+10, "gmt+11":int(gmt[0:2])+11, "gmt+12":int(gmt[0:2])+12,
+        "gmt-1":int(gmt[0:2])-1, "gmt-2":int(gmt[0:2])-2, "gmt-3":int(gmt[0:2])-3, "gmt-4":int(gmt[0:2])-4,"gmt-5":int(gmt[0:2])-5, "gmt-6":int(gmt[0:2])-6,
+        "gmt-7":int(gmt[0:2])-7, "gmt-8":int(gmt[0:2])-8,"gmt-9":int(gmt[0:2])-9, "gmt-10":int(gmt[0:2])-10, "gmt-11":int(gmt[0:2])-11, "gmt-12":int(gmt[0:2])-12}
 
+def getTime(timezone):
+    if timezone in world_times:
+        hour = str(world_times[timezone])
+        print(time.strftime("{}:%M:%S %p").format(hour))
+    else: 
+        return PARAM_ERROR
+    
+
+getTime("gmt-4")
