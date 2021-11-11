@@ -1,7 +1,7 @@
 
 
-from Alarm_clock.timer import *
-from Alarm_clock.timeZones import *
+from timer import *
+from timeZones import *
 from time import strftime
 
 
