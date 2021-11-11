@@ -1,6 +1,6 @@
 import time
 from tkinter import *
-from Alarm_clock.alarm import *
+from alarm import *
 
 PARAM_ERROR = "Unsuitable parameter"
 
