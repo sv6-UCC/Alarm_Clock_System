@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import *
 import time
-from alarm import *
+from Alarm_clock.alarm import *
 from tkinter import font
 from winsound import *
 
