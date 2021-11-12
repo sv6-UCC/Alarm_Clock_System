@@ -108,7 +108,7 @@ def getTime(timezone=0):
         curr_timezone = timezone
     hour = str(world_times[curr_timezone])
     tme_zone = time.strftime("{}:%M:%S %p").format(hour)
-    tme_z.config(text=tme_zone, font=("new_roman", 50, "bold"))
+    tme_z.config(text="("+curr_timezone+") "+tme_zone, font=("new_roman", 50, "bold"))
     tme_z.after(1000, getTime)
 
 

@@ -4,7 +4,7 @@ import datetime
 import time
 from winsound import PlaySound, SND_FILENAME, SND_LOOP, SND_ASYNC
 from threading import *
-
+import calendar
 from time import gmtime, strftime
 import time
 
@@ -38,29 +38,50 @@ def displayCurrentTimeZone():
 
 
 def saveNewAlarmTime():
+    lines = [hour.get(),minute.get(),second.get()]
+    with open('data.txt', 'w') as f:
+        for line in lines:
+            f.write(line)
+            f.write(' ')
+    setAlarmTimeAndDate()
+
+def setAlarmTimeAndDate():
     # Infinite Loop
-    while True:
-        # Set Alarm
+    isValidDate = True
+    try:
+        datetime.datetime(int(year.get()), int(month.get()), int(day.get()))
+    except ValueError:
+        isValidDate = False
 
-        set_alarm_time = f"{hour.get()}:{minute.get()}:{second.get()}"
+    if (isValidDate):
+        print("Input date is valid ..")
+        while True:
+            # Set Alarm
 
-        # Wait for one seconds
-        time.sleep(1)
+            set_alarm_time = f"{hour.get()}:{minute.get()}:{second.get()}"
+            # set_alarm_date = f"{day.get()}:{month.get()}:{year.get()}"
 
-        # Get current time
-        current_time = datetime.datetime.now().strftime("%H:%M:%S")
-        print(current_time, set_alarm_time)
+            # Wait for one seconds
+            time.sleep(1)
 
-        # Check whether set alarm is equal to current time or not
-        if current_time == set_alarm_time:
-            alarmActivated()
+            # Get current time
+            current_time = datetime.datetime.now().strftime("%H:%M:%S")
+            print(current_time, set_alarm_time)
+
+            # Check whether set alarm is equal to current time or not
+            if current_time == set_alarm_time:
+                alarmActivated()
+    else:
+        print("Input date is not valid..")
+
+
 
 
 def alarmActivated():
     snooze_time = 20
     print("Time to Wake up")
     Button(root, text="Deactivate Alarm", font=("Helvetica 15"), command=deactivateCurrentAlarm).pack(pady=20)
-    Label(root, text="Current Snooze Time "+str(snooze_time)).pack()
+    Label(root, text="Snooze Time "+str(snooze_time)).pack()
     Button(root, text="Snooze", font=("Helvetica 15"), command=snooze).pack(pady=20)
     # Playing sound SND_FILENAME|SND_LOOP|SND_ASYNC
     # winsound.PlaySound("alarm-tone.wav", winsound.SND_FILENAME, winsound.SND_LOOP,winsound.SND_ASYNC)
@@ -125,6 +146,41 @@ def edit_time():
     secs = OptionMenu(frame, second, *seconds)
     secs.pack(side=LEFT)
 
+    Label(root, text="Set Date", font=("Helvetica 15 bold")).pack()
+
+    date_frame = Frame(root)
+    date_frame.pack()
+
+    global day
+    day = StringVar(root)
+    days = ('00', '01', '02', '03', '04', '05', '06', '07',
+             '08', '09', '10', '11', '12', '13', '14', '15',
+             '16', '17', '18', '19', '20', '21', '22', '23', '24','25','26','27','28','29','30','31'
+             )
+    day.set(days[0])
+
+    dys = OptionMenu(date_frame, day, *days)
+    dys.pack(side=LEFT)
+
+    global month
+    month = StringVar(root)
+    months = ('00', '01', '02', '03', '04', '05', '06', '07',
+               '08', '09', '10', '11', '12')
+    month.set(months[0])
+
+    mth = OptionMenu(date_frame, month, *months)
+    mth.pack(side=LEFT)
+
+    global year
+    year = StringVar(root)
+    years = ('2021', '2022', '2023', '2024', '2025', '2026', '2027',
+               '2028', '2029')
+    year.set(years[0])
+
+    yrs = OptionMenu(date_frame, year, *years)
+    yrs.pack(side=LEFT)
+
+
     Button(root, text="Set Alarm", font=("Helvetica 15"), command=Threading).pack(pady=20)
 
 def manageSettings():
@@ -140,7 +196,7 @@ def manageSettings():
     # A Label widget to show in toplevel
     Button(settingsWindow, text="Select Ringtone", font=("Helvetica 15"), command=selectRingtone).pack(pady=20)
     #Button(settingsWindow, text="Snooze Time", font=("Helvetica 15"), command=editSnoozeTime).pack(pady=20)
-    Button(settingsWindow, text="Change Volume", font=("Helvetica 15"), command=changeVolume).pack(pady=20)
+    Button(settingsWindow, text="Change Volume", font=("Helvetica 15"), command=displayVolume).pack(pady=20)
 
 
 def selectRingtone():
@@ -160,13 +216,33 @@ def selectRingtone():
     # sets the geometry of toplevel
 
 def new_ringtone(track):
+    lines = [track]
+    with open('data.txt', 'w') as f:
+        for line in lines:
+            f.write(line)
+            f.write(' ')
     global new_track
     new_track = track
 
-def changeVolume():
-    import wave, audioop
+def displayVolume():
+    volWindow = Toplevel(root)
+    volWindow.title("Volume")
+    volWindow.geometry("200x200")
+    Button(volWindow, text="Increase by 25%", font=("Helvetica 15"), command=changeVolume(0.25)).pack(
+        pady=20)
+    Button(volWindow, text="Increase by 50%", font=("Helvetica 15"), command=changeVolume(0.5)).pack(
+        pady=20)
 
-    factor = 0.1
+    Button(volWindow, text="Increase by 75%", font=("Helvetica 15"), command=changeVolume(0.75)).pack(
+        pady=20)
+    # sets the geometry of toplevel
+def changeVolume(factor):
+    lines = ["Increased by",str(factor)," %"]
+    with open('data.txt', 'w') as f:
+        for line in lines:
+            f.write(line)
+            f.write(' ')
+    import wave, audioop
 
     with wave.open('alarm-tone.wav', 'rb') as wav:
         p = wav.getparams()

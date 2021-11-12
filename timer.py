@@ -84,10 +84,10 @@ def run_timer():
     master = Toplevel(root)
     master.title("Timer")
     master.geometry("500x400")
-    master.configure(bg="red")
+    master.configure()
 
     frame1 = Frame(master, bd=10, bg="black", relief="ridge")
-    frame1.grid(column=1, row=1, padx=200)
+    frame1.grid(column=1, row=1, padx=50)
 
     askLabel = Label(frame1, text="Enter Target time below:")
     askLabel.configure(width=21, bg="black", fg="white", font=5)
