@@ -40,9 +40,23 @@ class AlarmTest():
             return "invalid time"
 
 #my_test =AlarmTest([8,22,50],[2021,12,22])
-my_test =AlarmTest([8,22,50],[2021,2,30])
-print(my_test.test_time())
-print(my_test.test_date())
+test_list=[]
+test1 =AlarmTest([14,37,59],[2021,12,22])
+test2 =AlarmTest([8,22,50],[2021,2,30])
+test3 =AlarmTest([28,12,41],[2023,4,18])
+test4 =AlarmTest([11,75,10],[2023,9,31])
+test_list.append(test1)
+test_list.append(test2)
+test_list.append(test3)
+test_list.append(test4)
+for i in range(0,len(test_list)):
+    print("Test "+str(i+1))
+    for test in test_list:
+        print(test.test_time())
+        print(test.test_date())
+        break
+    test_list.remove(test)
+
 
 
 
